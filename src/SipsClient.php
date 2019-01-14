@@ -9,7 +9,7 @@ use Worldline\Sips\Common\Seal\JsonSealCalculator;
 use Worldline\Sips\Common\Seal\PostSealCalculator;
 use Worldline\Sips\Common\SipsEnvironment;
 use Worldline\Sips\Paypage\InitializationResponse;
-use Worldline\Sips\Paypage\PaypageRequest;
+use Worldline\Sips\SipsRequest;
 use Worldline\Sips\Paypage\PaypageResult;
 
 class SipsClient
@@ -49,24 +49,24 @@ class SipsClient
     }
 
     /**
-     * @param PaypageRequest $paymentRequest
+     * @param SipsRequest $sipsRequest
      * @return InitializationResponse
      * @throws \Exception
      */
-    public function initialize(PaypageRequest &$paymentRequest): InitializationResponse
+    public function initialize(SipsRequest $sipsRequest): InitializationResponse
     {
-        $paymentRequest->setMerchantId($this->getMerchantId());
-        $paymentRequest->setKeyVersion($this->getKeyVersion());
+        $sipsRequest->setMerchantId($this->getMerchantId());
+        $sipsRequest->setKeyVersion($this->getKeyVersion());
 
         $sealCalculator = new JsonSealCalculator();
-        $sealCalculator->calculateSeal($paymentRequest, $this->secretKey);
-        $json = json_encode($paymentRequest->toArray());
+        $sealCalculator->calculateSeal($sipsRequest, $this->secretKey);
+        $json = json_encode($sipsRequest->toArray());
         $client = new Client(["base_uri" => $this->environment->getEnvironment()]);
         $headers = [
             "Content-Type" => "application/json",
             "Accept" => "application/json",
         ];
-        $request = new Request("POST", $paymentRequest->getServiceUrl(), $headers, $json);
+        $request = new Request("POST", $sipsRequest->getServiceUrl(), $headers, $json);
         $response = $client->send($request);
         $initialisationResponse = new InitializationResponse(json_decode($response->getBody()->getContents(), true));
         if (!is_null($initialisationResponse->getSeal())) {

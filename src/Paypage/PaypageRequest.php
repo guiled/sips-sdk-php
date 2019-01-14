@@ -6,10 +6,10 @@ namespace Worldline\Sips\Paypage;
 use Worldline\Sips\Common\Field\Address;
 use Worldline\Sips\Common\Field\Contact;
 use Worldline\Sips\Common\Field\PaypageData;
+use Worldline\Sips\SipsRequest;
 
-class PaypageRequest
+class PaypageRequest extends SipsRequest
 {
-    public $serviceUrl = "rs-services/v2/paymentInit";
     private $amount;
     private $automaticResponseUrl;
     private $billingAddress;
@@ -25,17 +25,13 @@ class PaypageRequest
     private $deliveryContact;
     private $holderAddress;
     private $holderContact;
-    private $interfaceVersion;
     private $intermediateServiceProvider;
-    private $keyVersion;
-    private $merchantId;
     private $merchantWalletId;
     private $normalReturnUrl;
     private $orderChannel;
     private $orderId;
     private $paymentMeanBrandList;
     private $transactionReference;
-    private $seal;
     private $statementReference;
     private $templateName;
     private $paypageData;
@@ -45,6 +41,7 @@ class PaypageRequest
      */
     public function __construct()
     {
+        $this->serviceUrl = "rs-services/v2/paymentInit";
         $this->interfaceVersion = "IR_WS_2.19";
         $this->setTransactionReference($this->generateReference());
     }
@@ -394,21 +391,6 @@ class PaypageRequest
         $this->holderContact = $holderContact;
     }
 
-    /**
-     * @return string
-     */
-    public function getInterfaceVersion(): string
-    {
-        return $this->interfaceVersion;
-    }
-
-    /**
-     * @param string $interfaceVersion
-     */
-    public function setInterfaceVersion(string $interfaceVersion)
-    {
-        $this->interfaceVersion = $interfaceVersion;
-    }
 
     /**
      * @return string
@@ -427,38 +409,6 @@ class PaypageRequest
     }
 
 
-
-    /**
-     * @return int
-     */
-    public function getKeyVersion(): int
-    {
-        return $this->keyVersion;
-    }
-
-    /**
-     * @param int $keyVersion
-     */
-    public function setKeyVersion(int $keyVersion)
-    {
-        $this->keyVersion = $keyVersion;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMerchantId(): string
-    {
-        return $this->merchantId;
-    }
-
-    /**
-     * @param string $merchantId
-     */
-    public function setMerchantId(string $merchantId)
-    {
-        $this->merchantId = $merchantId;
-    }
 
     /**
      * @return string
@@ -557,22 +507,6 @@ class PaypageRequest
     /**
      * @return string
      */
-    public function getSeal(): string
-    {
-        return $this->seal;
-    }
-
-    /**
-     * @param string $seal
-     */
-    public function setSeal(string $seal)
-    {
-        $this->seal = $seal;
-    }
-
-    /**
-     * @return string
-     */
     public function getStatementReference(): string
     {
         return $this->statementReference;
@@ -616,14 +550,6 @@ class PaypageRequest
     public function setPaypageData(PaypageData $paypageData)
     {
         $this->paypageData = $paypageData;
-    }
-
-    /**
-     * @return string
-     */
-    public function getServiceUrl(): string
-    {
-        return $this->serviceUrl;
     }
 
     /**
