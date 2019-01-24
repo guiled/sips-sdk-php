@@ -10,38 +10,38 @@ use Worldline\Sips\SipsRequest;
 
 class PaypageRequest extends SipsRequest
 {
-    private $amount;
-    private $automaticResponseUrl;
-    private $billingAddress;
-    private $billingContact;
-    private $captureDay;
-    private $captureMode;
-    private $currencyCode;
-    private $customerId;
-    private $customerAddress;
-    private $customerContact;
-    private $customerLanguage;
-    private $deliveryAddress;
-    private $deliveryContact;
-    private $holderAddress;
-    private $holderContact;
-    private $intermediateServiceProvider;
-    private $merchantWalletId;
-    private $normalReturnUrl;
-    private $orderChannel;
-    private $orderId;
-    private $paymentMeanBrandList;
-    private $transactionReference;
-    private $statementReference;
-    private $templateName;
-    private $paypageData;
+    protected $amount;
+    protected $automaticResponseUrl;
+    protected $billingAddress;
+    protected $billingContact;
+    protected $captureDay;
+    protected $captureMode;
+    protected $currencyCode;
+    protected $customerId;
+    protected $customerAddress;
+    protected $customerContact;
+    protected $customerLanguage;
+    protected $deliveryAddress;
+    protected $deliveryContact;
+    protected $holderAddress;
+    protected $holderContact;
+    protected $intermediateServiceProvider;
+    protected $merchantWalletId;
+    protected $normalReturnUrl;
+    protected $orderChannel;
+    protected $orderId;
+    protected $paymentMeanBrandList;
+    protected $transactionReference;
+    protected $statementReference;
+    protected $templateName;
+    protected $paypageData;
 
     /**
      * PaypageRequest constructor.
      */
     public function __construct()
     {
-        $this->serviceUrl = "rs-services/v2/paymentInit";
+        $this->serviceUrl       = "rs-services/v2/paymentInit";
         $this->interfaceVersion = "IR_WS_2.23";
         $this->setTransactionReference($this->generateReference());
     }
@@ -56,8 +56,8 @@ class PaypageRequest extends SipsRequest
 
     public function generateReference(): string
     {
-        $microtime = explode(' ', microtime());
-        $microtime[0] = $microtime[0] * 1000000;
+        $microtime            = explode(' ', microtime());
+        $microtime[0]         = $microtime[0] * 1000000;
         $transactionReference = $microtime[1] . $microtime[0];
         return $transactionReference;
     }
@@ -399,11 +399,10 @@ class PaypageRequest extends SipsRequest
         $this->holderContact = $holderContact;
     }
 
-
     /**
      * @return string
      */
-    public function getIntermediateServiceProvider() : string
+    public function getIntermediateServiceProvider(): string
     {
         return $this->intermediateServiceProvider;
     }
@@ -415,8 +414,6 @@ class PaypageRequest extends SipsRequest
     {
         $this->intermediateServiceProvider = $intermediateServiceProvider;
     }
-
-
 
     /**
      * @return string
@@ -559,28 +556,4 @@ class PaypageRequest extends SipsRequest
     {
         $this->paypageData = $paypageData;
     }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        $array = [];
-        foreach ($this as $key => $value) {
-            if ($value != null && $key != "serviceUrl" && $key != "paymentMeanBrandList") {
-                if (is_int($value) || is_string($value)) {
-                    $array[$key] = $value;
-                } else {
-                    $array[$key] = $value->toArray();
-                }
-            } elseif ($key == "paymentMeanBrandList" && !is_null($value)) {
-                $array[$key] = $value;
-            }
-        }
-        ksort($array);
-
-        return $array;
-    }
-
-
 }

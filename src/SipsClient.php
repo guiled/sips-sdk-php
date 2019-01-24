@@ -18,6 +18,7 @@ class SipsClient
     private $merchantId;
     private $secretKey;
     private $keyVersion;
+    protected $sealAlgorithm;
 
     /**
      * SipsClient constructor.
@@ -59,7 +60,8 @@ class SipsClient
         $sipsRequest->setKeyVersion($this->getKeyVersion());
 
         $sealCalculator = new JsonSealCalculator();
-        $sealCalculator->calculateSeal($sipsRequest, $this->secretKey);
+        $sealAlgorithm = $this->sealAlgorithm ?? JsonSealCalculator::ALGORITHM_DEFAULT;
+        $sealCalculator->calculateSeal($sipsRequest, $this->secretKey, $sealAlgorithm);
         $json = json_encode($sipsRequest->toArray());
         $client = new Client(["base_uri" => $this->environment->getEnvironment()]);
         $headers = [
@@ -70,10 +72,8 @@ class SipsClient
         $response = $client->send($request);
         $initialisationResponse = new InitializationResponse(json_decode($response->getBody()->getContents(), true));
         if (!is_null($initialisationResponse->getSeal())) {
-            $validSeal = $sealCalculator->isCorrectSeal($initialisationResponse, $this->getSecretKey());
+            $validSeal = $sealCalculator->isCorrectSeal($initialisationResponse, $this->getSecretKey(), $sealAlgorithm);
             if (!$validSeal) {
-                var_dump($initialisationResponse);
-                var_dump($sealCalculator->getSealData($initialisationResponse->toArray()));
                 throw new \Exception("Invalid seal in response. Response not trusted.");
             }
         }
@@ -130,8 +130,18 @@ class SipsClient
     }
 
 
+    public function getSealAlgorithm()
+    {
+        return $this->sealAlgorithm;
+    }
 
-    /**
+    public function setSealAlgorithm($sealAlgorithm)
+    {
+        $this->sealAlgorithm = $sealAlgorithm;
+        return $this;
+    }
+
+        /**
      * @return PaypageResult
      * @throws \Exception
      */
