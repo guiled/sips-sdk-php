@@ -36,6 +36,11 @@ class PaypageRequest extends SipsRequest
     protected $templateName;
     protected $paypageData;
 
+    const PAYMENT_MEAN_BRAND_CB = 'CB';
+    const PAYMENT_MEAN_BRAND_MASTERCARD = 'MASTERCARD';
+    const PAYMENT_MEAN_BRAND_VISA = 'VISA';
+    const PAYMENT_MEAN_BRAND_AMEX = 'AMEX';
+
     /**
      * PaypageRequest constructor.
      */
