@@ -8,6 +8,12 @@ namespace Worldline\Sips;
 abstract class SipsRequest
 {
     /**
+     * Connecter where to send the request
+     * @var string
+     */
+    public $connecter;
+
+    /**
      *
      * @var string
      */
@@ -42,6 +48,15 @@ abstract class SipsRequest
      * @var string
      */
     protected $sealAlgorithm;
+
+    /**
+     *
+     * @return string
+     */
+    public function getConnecter():string
+    {
+        return $this->connecter;
+    }
 
     /**
      *
@@ -159,7 +174,7 @@ abstract class SipsRequest
     {
         $array    = [];
         foreach ($this as $key => $value) {
-            if (is_null($value) || $key === 'serviceUrl') {
+            if (is_null($value) || $key === 'serviceUrl' || $key === 'connecter') {
                 // null values are excluded from the array export
                 continue;
             }
