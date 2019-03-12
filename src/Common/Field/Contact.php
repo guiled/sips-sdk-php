@@ -5,13 +5,13 @@ namespace Worldline\Sips\Common\Field;
 
 class Contact
 {
-    private $email;
-    private $firstname;
-    private $gender;
-    private $lastname;
-    private $mobile;
-    private $phone;
-    private $title;
+    protected $email;
+    protected $firstname;
+    protected $gender;
+    protected $lastname;
+    protected $mobile;
+    protected $phone;
+    protected $title;
 
     /**
      * @return string

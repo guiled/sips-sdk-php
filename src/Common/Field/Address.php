@@ -5,17 +5,17 @@ namespace Worldline\Sips\Common\Field;
 
 class Address
 {
-    private $addressAdditional1;
-    private $addressAdditional2;
-    private $addressAdditional3;
-    private $city;
-    private $company;
-    private $country;
-    private $postBox;
-    private $state;
-    private $street;
-    private $streetNumber;
-    private $zipCode;
+    protected $addressAdditional1;
+    protected $addressAdditional2;
+    protected $addressAdditional3;
+    protected $city;
+    protected $company;
+    protected $country;
+    protected $postBox;
+    protected $state;
+    protected $street;
+    protected $streetNumber;
+    protected $zipCode;
 
     /**
      * @return string

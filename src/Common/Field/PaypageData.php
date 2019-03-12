@@ -5,7 +5,7 @@ namespace Worldline\Sips\Common\Field;
 
 class PaypageData
 {
-    private $bypassReceiptPage;
+    protected $bypassReceiptPage;
 
     /**
      * @return bool
