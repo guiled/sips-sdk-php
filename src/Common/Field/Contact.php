@@ -3,7 +3,7 @@
 namespace Worldline\Sips\Common\Field;
 
 
-class Contact
+class Contact extends \Worldline\Sips\Common\Field
 {
     protected $email;
     protected $firstname;
@@ -123,20 +123,5 @@ class Contact
     public function setTitle(string $title)
     {
         $this->title = $title;
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        $array = [];
-        foreach ($this as $key => $value) {
-            if ($value != null) {
-                $array[$key] = $value;
-            }
-        }
-        ksort($array);
-        return $array;
     }
 }

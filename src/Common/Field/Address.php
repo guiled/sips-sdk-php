@@ -3,7 +3,7 @@
 namespace Worldline\Sips\Common\Field;
 
 
-class Address
+class Address extends \Worldline\Sips\Common\Field
 {
     protected $addressAdditional1;
     protected $addressAdditional2;
@@ -193,18 +193,4 @@ class Address
         $this->zipCode = $zipCode;
     }
 
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        $array = [];
-        foreach ($this as $key => $value) {
-            if ($value != null) {
-                $array[$key] = $value;
-            }
-        }
-        ksort($array);
-        return $array;
-    }
 }

@@ -3,7 +3,7 @@
 namespace Worldline\Sips\Common\Field;
 
 
-class PaypageData
+class PaypageData extends \Worldline\Sips\Common\Field
 {
     protected $bypassReceiptPage;
 
@@ -29,20 +29,5 @@ class PaypageData
         } else {
             $this->bypassReceiptPage = "false";
         }
-    }
-
-    /**
-     * @return array
-     */
-    public function toArray(): array
-    {
-        $array = [];
-        foreach ($this as $key => $value) {
-            if ($value != null) {
-                $array[$key] = $value;
-            }
-        }
-        ksort($array);
-        return $array;
     }
 }
