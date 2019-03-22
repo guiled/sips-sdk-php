@@ -14,10 +14,10 @@ use Worldline\Sips\Paypage\PaypageResult;
 
 class SipsClient
 {
-    protected $environment;
-    protected $merchantId;
-    protected $secretKey;
-    protected $keyVersion;
+    private $environment;
+    private $merchantId;
+    private $secretKey;
+    private $keyVersion;
     protected $sealAlgorithm;
 
     /**
