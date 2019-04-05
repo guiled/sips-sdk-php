@@ -5,7 +5,7 @@ namespace Worldline\Sips;
 /**
  *
  */
-abstract class SipsRequest
+abstract class SipsRequest extends Common\Field
 {
     /**
      * Connecter where to send the request
@@ -167,23 +167,17 @@ abstract class SipsRequest
 
     /**
      *
-     * @param string $prefixKey Prefix to add in the beginning of each key
      * @return array
      */
-    public function toArray($prefixKey = ''): array
+    public function toArray(): array
     {
-        $array    = [];
-        foreach ($this as $key => $value) {
-            if (is_null($value) || $key === 'serviceUrl' || $key === 'connecter') {
-                // null values are excluded from the array export
-                continue;
-            }
-            if ($value instanceof SipsRequest) {
-                // Every value in the sub object must be prefixed by the current key
-                $array = array_merge($array, $value->toArray($key));
-            } else {
-                $array[$prefixKey . $key] = $value;
-            }
+        $array    = parent::toArray();
+        
+        unset($array['serviceUrl']);
+        unset($array['connecter']);
+
+        if (isset($array['s10TransactionReference'])) {
+            unset($array['transactionReference']);
         }
         ksort($array);
 
