@@ -10,7 +10,11 @@ class Field
         $array = [];
         foreach ($this as $key => $value) {
             if ($value != null) {
-                $array[$key] = $value;
+                if ($value instanceof Field) {
+                    $array[$key] = $value->toArray();
+                } else {
+                    $array[$key] = $value;
+                }
             }
         }
         ksort($array);
