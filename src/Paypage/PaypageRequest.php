@@ -32,6 +32,7 @@ class PaypageRequest extends SipsRequest
     protected $orderId;
     protected $paymentMeanBrandList;
     protected $transactionReference;
+    protected $s10TransactionReference;
     protected $statementReference;
     protected $templateName;
     protected $paypageData;
@@ -582,4 +583,18 @@ class PaypageRequest extends SipsRequest
         // Seems that this parameter is a string (A5, restricted value)
         $this->bypassReceiptPage = ($bypass ? 'true' : 'false');
     }
+    
+    public function getS10TransactionReference(): \Worldline\Sips\Common\Field\S10TransactionReference
+    {
+        return $this->s10TransactionReference;
+    }
+
+    public function setS10TransactionReference(\Worldline\Sips\Common\Field\S10TransactionReference $s10TransactionReference)
+    {
+        unset($this->transactionReference);
+        $this->s10TransactionReference = $s10TransactionReference;
+        return $this;
+    }
+
+
 }
